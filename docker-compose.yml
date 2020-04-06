@@ -1,0 +1,24 @@
+version: '2'
+services:
+  ui:
+    build: ./ui
+    ports:
+      - '80:80'
+    depends_on:
+      - api
+  api:
+    build: ./back_reseau_social/app
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+volumes:
+  mongodb:
+  mongodb_config:
