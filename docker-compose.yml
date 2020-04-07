@@ -1,5 +1,12 @@
 version: '2'
 services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
   ui:
     build: ./ui
     ports:
@@ -24,13 +31,6 @@ services:
       - '8082:8080'
     depends_on:
       - api1
-  mongo:
-    image: mongo
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongodb:/data/db
-      - mongodb_config:/data/configdb
   monitoring:
     image: salihciftci/liman
     ports:
