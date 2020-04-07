@@ -5,13 +5,25 @@ services:
     ports:
       - '80:80'
     depends_on:
-      - api
-  api:
+      - api1
+  api1:
     build: ./back_reseau_social/app
     ports:
       - '8080:8080'
     depends_on:
       - mongo
+  api2:
+    build: ./back_reseau_social/app
+    ports:
+      - '8081:8080'
+    depends_on:
+      - api1
+  api3:
+    build: ./back_reseau_social/app
+    ports:
+      - '8082:8080'
+    depends_on:
+      - api1
   mongo:
     image: mongo
     ports:
@@ -19,6 +31,14 @@ services:
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
+  monitoring:
+    image: salihciftci/liman
+    ports:
+      - '5000:5000'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - liman:/liman/data
 volumes:
   mongodb:
   mongodb_config:
+  liman:
